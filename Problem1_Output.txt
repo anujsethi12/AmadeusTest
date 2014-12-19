@@ -1,0 +1,12 @@
+Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  6 2014, 22:16:31) [MSC v.1600 64 bit (AMD64)] on win32
+Type "copyright", "credits" or "license()" for more information.
+>>> ================================ RESTART ================================
+>>> 
+Program to count Lines in CSV
+
+Lines in bookings.csv
+10000011
+
+Lines in searches.csv
+20390199
+>>> 
