@@ -1,0 +1,16 @@
+
+C:\Anaconda3\z>Problem2_Solution.py
+           pax
+arr_port
+LHR       8881
+MCO       7093
+LAX       7053
+LAS       6963
+JFK       6627
+CDG       6449
+BKK       5946
+MIA       5815
+SFO       5800
+DXB       5559
+
+C:\Anaconda3\z>
