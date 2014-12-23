@@ -1,42 +1,60 @@
+# Graph using Pandas
+import csv
 import pandas as pd
-from pandas import DataFrame, Series
+import numpy as np
+import matplotlib.pyplot as plt
 
-#Madarid = MAD, Barcelona = BCN, Malaga = AGP
+with open('searches.csv', 'r') as f:
+	reader = csv.reader(f, delimiter='^')
+	i=0
+	next(reader)	#skip headers
+	data = []
+	for i in range(0,1000000):			#processing limited rows because personal notebook computer is not able to process such a huge data
+		data.append(next(reader))		#append data
+		i=i+1
 
+# Filter Data based on destination and populate new data structure with format: Month, Destination, integer value 1(will be later added up to count number of searches)
 
-#Resorted_data CSV into DataFrame [in chunks]
-fixed_df = pd.read_csv('searches.csv', sep='^', chunksize=100000, low_memory=False, usecols=['Date','Destination'], parse_dates=["Date"])
-# fixed_df.get_chunk(100000)['ms'] = pd.DatetimeIndex(fixed_df.get_chunk(100000)['Date']).month
-# fixed_df.get_chunk()['Date'] = fixed_df.get_chunk()['Date'].map(lambda x: x.month)
-# fixed_df = fixed_df
+MAD = []	#Madarid = MAD
+BCN = []	#Barcelona = BCN
+AGP = []	#Malaga = AGP
 
-for chunk in fixed_df.get_chunk():
-	chunk['ms'] = pd.DatetimeIndex(chunk['Date']).month
-	print(chunk)
+for row in data:
+	if row[6] == "MAD":
+		row[0] = row[0][5:7]	#Fetch only month by selecting sub-string
+		MAD.append([row[0],row[6],1])
+	if row[6] == "BCN":
+		row[0] = row[0][5:7]
+		BCN.append([row[0],row[6],1])
+	if row[6] == "AGP":
+		row[0] = row[0][5:7]
+		AGP.append([row[0],row[6],1])
 
-# fixed_df.get_chunk().join(pd.DatetimeIndex(fixed_df.get_chunk(100000)['Date']).month)
+# Group by months, add up search values and plot graph
 
-# print(fixed_df.get_chunk(100000))
+df_MAD = pd.DataFrame(MAD,columns=['Month', 'Destination', 'SearchCount'])
+aggregated_MAD = df_MAD.groupby('Month').sum()	# Aggregate and Sum
+plt.plot(aggregated_MAD, label='Madarid')		# Plot graph
+print("\nMonthly Search for Madarid-MAD:\n")
+print(aggregated_MAD)							# Print values to console output
 
-# print(pd.DatetimeIndex(fixed_df.get_chunk(1000000)['Date']).month)
-# dates = pd.DatetimeIndex(fixed_df.get_chunk(100000)['Date'])
-# new = Series(dates).apply(lambda x: x.month)
-# grouped = fixed_df.get_chunk().groupby(pd.DatetimeIndex(fixed_df.get_chunk(1000000)['Date']).month)
-# print(grouped)grouped = fixed_df.get_chunk().groupby(pd.DatetimeIndex(fixed_df.get_chunk(1000000)['Date']).month)
-# print(grouped)
-# filter = [row for row in fixed_df.get_chunk(10000)['Destination'] if row == 'MAD']
-# print(Series(filter))
-# print(new)
+df_BCN = pd.DataFrame(BCN,columns=['Month', 'Destination', 'SearchCount'])
+aggregated_BCN = df_BCN.groupby('Month').sum()
+plt.plot(aggregated_BCN, label='Barcelona')
+print("\nMonthly Search for Barcelona-BCN:\n")
+print(aggregated_BCN)
 
+df_AGP = pd.DataFrame(AGP,columns=['Month', 'Destination', 'SearchCount'])
+aggregated_AGP = df_AGP.groupby('Month').sum()
+plt.plot(aggregated_AGP, label='Malaga')
+print("\nMonthly Search for Malaga-AGP:\n")
+print(aggregated_AGP)
 
-
-
-#Aggregate and Sum
-# aggregated_data = fixed_df.get_chunk().groupby('arr_port').sum()
-
-#Sort in descending order by pax and select top 10
-# sorted_data = aggregated_data.sort('pax', ascending=0).head(10)
-
-#Choose desires output columns and print
-# output = sorted_data[[3]]
-# print(output)
+# Set graph properties
+bar_width = 0
+n_groups = 12
+index = np.arange(n_groups)
+plt.xticks(index + bar_width, ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
+plt.legend(loc='upper right')
+plt.title('Number of Searches per month')
+plt.show()
