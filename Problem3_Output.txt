@@ -1,0 +1,61 @@
+
+****************************************************************************************
+
+Snapshot of graph can be viewed at google drive public link:
+https://drive.google.com/file/d/0B-aUiTCyF8phR2NJbVJ3V0RDSlk/view?usp=sharing
+
+****************************************************************************************
+
+
+C:\Anaconda3\z>Problem3_Solution.py
+
+Monthly Search for Madarid-MAD:
+
+       SearchCount
+Month
+01            1275
+02            1200
+03            1299
+04            1329
+05            1386
+06            1200
+07            1209
+08            1149
+09            1113
+10             915
+11             724
+12             518
+
+Monthly Search for Barcelona-BCN:
+
+       SearchCount
+Month
+01            1551
+02            1491
+03            1608
+04            1644
+05            1512
+06            1395
+07            1539
+08            1425
+09            1233
+10             839
+11             708
+12             550
+
+Monthly Search for Malaga-AGP:
+
+       SearchCount
+Month
+01             507
+02             441
+03             561
+04             435
+05             570
+06             417
+07             468
+08             414
+09             429
+10             271
+11             228
+12             132
